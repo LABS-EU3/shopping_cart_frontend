@@ -22,6 +22,8 @@ after_script:
 after_success:
   - npm run coverage
   - npm run coveralls
+  - curl -X POST -d {} https://api.netlify.com/build_hooks/5dfb6da7731866a568a0af1e
+
 
 notifications:
   email: true
@@ -32,7 +34,7 @@ before_deploy:
 
 deploy:
   provider: script
-  script: netlify deploy -s $NETLIFY_SITE_ID -t $NETLIFY_ACCESS_TOKEN -p 
+  script: netlify deploy -s $NETLIFY_SITE_ID -t $NETLIFY_ACCESS_TOKEN -p ./build
   skip_cleanup: true
   on:
     branch: develop
