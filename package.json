@@ -22,10 +22,28 @@
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0"
   },
+  "nyc": {
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "tempDirectory": "./coverage"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 50,
+        "functions": 100,
+        "lines": 100
+      }
+    }
+  },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "test": "react-app-rewired test --env=jsdom --collectCoverageFrom=src/components/**/*.{ts,tsx}",
+    "cov": "npm test -- --coverage",
     "eject": "react-scripts eject",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "coverage": "nyc report --reporter=text-lcov | coveralls && nyc report --reporter=lcov"
