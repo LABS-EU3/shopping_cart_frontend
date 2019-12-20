@@ -135,14 +135,15 @@ const BasicInputExample = props => {
               <WhiteSpace />
             </Flex>
           </List>
-        </div>
-        <ConfirmButton text='Register' handleSubmit={handleSubmit} />
+          <ConfirmButton text='Register' handleSubmit={handleSubmit} />
         <WhiteSpace />
         <div>{errMessage}</div>
         <div id='or-log-in'>
           or <a href='/login'>login</a> instead
         </div>
       </div>
+        </div>
+        
     </form>
   )
 }
