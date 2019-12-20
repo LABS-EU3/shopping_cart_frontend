@@ -2,7 +2,8 @@ import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.css'
 import Register from './components/Register/Register'
-import Login from './components/Login/Login'
+import Login from './components/Login/Login';
+import Dashboard from './components/Dashboard/Dashboard';
 
 function App () {
   return (
@@ -14,6 +15,9 @@ function App () {
           </Route>
           <Route path='/login'>
             <Login />
+          </Route>
+          <Route path='/dashboard'>
+            <Dashboard />
           </Route>
         </Switch>
       </div>
