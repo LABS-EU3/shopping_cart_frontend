@@ -9,8 +9,7 @@ import { ConfirmButton } from '../Reusable'
 const loginURL = 'https://shopping-cart-eu3.herokuapp.com/api/auth/login';
 
 const BasicInputExample = props => {
-  const [confirmDirty] = useState(false)
-  const [errMessage, setErrMessage] = useState('')
+  const [errMessage] = useState('')
   function showToast (error) {
     Toast.info(error, 1)
   }
@@ -24,9 +23,8 @@ const BasicInputExample = props => {
       if (!err) {
         axios.post(loginURL, payload)
           .then(res => {
-            showToast('Logged!');
+            showToast("You're logged in!");
             localStorage.setItem('token', res.data.token);
-            props.history.push('/dashboard');
           })
           .catch(error => {
             window.alert(error.message)

@@ -2,7 +2,7 @@ import { List, InputItem } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import React from 'react';
 import './login.css';
-import { ConfirmButton } from '../Reusable/index'
+import { ConfirmButton } from '../Reusable/index';
 
 class BasicInputExample extends React.Component {
   componentDidMount() {
