@@ -16,6 +16,7 @@ import UpdateProfile from './components/EditProfile'
 import Home from './components/DashboardHome'
 import Store from './components/store'
 import Stripe from './components/Stripe'
+import Order from './components/Buyer/Review Order';
 
 function App () {
   return (
@@ -33,6 +34,7 @@ function App () {
       <PrivateRoute path='/createitem' component={CreateItem} />
       <PrivateRoute path='/dashboard' component={Home} />
       <PrivateRoute path='/updateitem/:id' component={UpdateItem} />
+      <PublicRoute path='/review' component={Order} />
     </Switch>
   )
 }
