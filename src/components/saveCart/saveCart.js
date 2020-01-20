@@ -44,7 +44,13 @@ const SaveCart = props => {
           // "http://localhost:4000/api/store/5e21daecc957980bd0911e9d/cart/submit",
           // payload
           "https://shopping-cart-eu3-staging.herokuapp.com/api/store/5e2066ff5072d500171de812/cart/submit",
-          payload
+          payload,
+          {
+            headers: {
+              "Access-Control-Allow-Origin": "*",
+              "Access-Control-Allow-Credentials": true
+            }
+          }
         )
         .then(res => console.log(res))
         .catch(e => console.log(e.response.message));
