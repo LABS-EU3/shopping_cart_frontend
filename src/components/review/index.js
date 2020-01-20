@@ -14,7 +14,7 @@ function Review (props) {
       setUp(true)
     } else {
       setUp(false)
-    }
+    } 
     lastScrollTop = st <= 0 ? 0 : st
   }, false)
   return (
