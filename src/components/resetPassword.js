@@ -66,8 +66,12 @@ const ResetPassword = props => {
 
   const resetPasswordForm = (
     <Spin spinning={isLoading}>
-      <div className='resetcover'>
-        <Logo />
+      <div className="resetcover">
+      <div className="box">
+
+      </div>
+      <div className='resetplace'>
+        <Logo/>
         <Form {...formItemLayout} onSubmit={handleSubmit}>
           <div id='header'>
             <h2>Reset Password</h2>
@@ -99,17 +103,22 @@ const ResetPassword = props => {
             )}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type='primary' htmlType='submit'>
+            <Button type='primary' htmlType='submit' 
+            className="Button"
+            >
               Get link
             </Button>
           </Form.Item>
         </Form>
+        <div id="linqs">
         <div id='back-to-login'>
           <Link to='/'>Back to login</Link>
         </div>
         <div id='contact-support'>
           <Link to='/support'>Contact support</Link>
         </div>
+        </div>
+      </div>
       </div>
     </Spin>
   )
