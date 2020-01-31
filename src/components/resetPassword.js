@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Input, Icon, Button, message, Spin } from 'antd'
 import Logo from './elements/logo'
-import * as creators from '../state/actionCreators'
+import * as creators from '../state/actionCreators';
+// import './resetPassword.css';
 
 const URL = 'https://shopping-cart-eu3.herokuapp.com/api/auth/recover'
 
@@ -65,7 +66,7 @@ const ResetPassword = props => {
 
   const resetPasswordForm = (
     <Spin spinning={isLoading}>
-      <div className='cover'>
+      <div className='resetcover'>
         <Logo />
         <Form {...formItemLayout} onSubmit={handleSubmit}>
           <div id='header'>
