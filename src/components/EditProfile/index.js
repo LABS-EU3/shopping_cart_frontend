@@ -5,11 +5,17 @@ import Nav from '../elements/nav'
 
 function UpdateProfile () {
   return (
-    <div>
+    <div
+      className="updateProfile"
+      // style={{
+      //   background: "#F2F2F2",
+      //   height: "90vh",
+      // }}
+    >
       <EditProfile />
       <Nav />
     </div>
-  )
+  );
 }
 
 export default UpdateProfile

@@ -187,12 +187,9 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
   const editProfile = (
     <Spin spinning={isLoading}>
       <div
-        className="cover"
+        className="cover editPage"
         style={{
-          height: "auto",
-          flexDirection: "column",
-          width: "800px",
-          marginTop: '20px'
+         
         }}
       >
         <div id="add-logo-image">
