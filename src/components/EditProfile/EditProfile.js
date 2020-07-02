@@ -349,10 +349,7 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
               type='link'
               htmlType='button'
               style={{
-                marginBottom: '25px',
-                background: 'red',
-                color: 'white',
-                width: '40%',
+             
               }}
             >
               Delete account

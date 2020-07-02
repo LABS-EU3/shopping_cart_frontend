@@ -110,11 +110,18 @@
 #or_login,
 #back-to-login,
 #contact-support {
-  font-size: medium;
+  font-size: large;
+}
+.register:hover , .resetpassword:hover{
+  color: rgb(19, 18, 18);
+  border: black 1px solid;
+  border-radius: 10px;
+  padding: 1rem;
 }
 #instruction-text {
   margin: 25px 30px;
   font-size: medium;
+  width: 75%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -145,8 +152,8 @@
     .desktop-form {
       width: 40%;
       height: 100%;
-      background: @secondary;
-      padding-top: 150px;
+      background: #f2f2f2;
+      padding-top: 18%;
 
       #header {
         display: none;
@@ -154,6 +161,7 @@
 
       .form-input {
         margin: 10px;
+        height: 5rem;
       }
 
       #or_login {
@@ -163,23 +171,36 @@
     .desktop-form-reset {
       width: 40%;
       height: 100%;
-      background: @secondary;
-      padding-top: 111px;
+      background: #f2f2f2;
+      padding-top: 15%;
 
       #header {
         display: none;
       }
 
-      .form-input {
+       .form-input {
         margin: 10px;
+        height: 5rem;
       }
 
       #back-to-login {
         padding-top: 25px;
       }
-      #contact-support{
+      #contact-support {
         padding-top: 10px;
       }
     }
   }
+}
+
+.login-button {
+  height: 5rem;
+  padding: 1rem !important;
+  height: 5rem !important;
+  font-size: 20px !important;
+}
+
+.login-button:hover {
+  background-color: #f2f2f2 !important;
+  color: black !important;
 }

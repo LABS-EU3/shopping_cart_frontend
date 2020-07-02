@@ -1,84 +1,84 @@
-import React from 'react'
-import axios from 'axios'
-import withAuth from './Auth/axiosWithAuth'
-import { Link } from 'react-router-dom'
-import { Form, Input, Icon, Button, message, Spin } from 'antd'
-import Logo from './elements/logo'
-import image from '../images/register.png'
-import history from '../history'
-import { connect } from 'react-redux'
-import { setLoading, setErrors, clearErrors } from '../state/actionCreators'
+import React from 'react';
+import axios from 'axios';
+import withAuth from './Auth/axiosWithAuth';
+import { Link } from 'react-router-dom';
+import { Form, Input, Icon, Button, message, Spin } from 'antd';
+import Logo from './elements/logo';
+import image from '../images/register.png';
+import history from '../history';
+import { connect } from 'react-redux';
+import { setLoading, setErrors, clearErrors } from '../state/actionCreators';
 
-const loginURL = 'https://shopping-cart-eu3.herokuapp.com/api/auth/login'
-const storeURL = 'https://shopping-cart-eu3.herokuapp.com/api/store'
-const Login = props => {
-  const handleSubmit = e => {
-    e.preventDefault()
+const loginURL = 'https://shopping-cart-eu3.herokuapp.com/api/auth/login';
+const storeURL = 'https://shopping-cart-eu3.herokuapp.com/api/store';
+const Login = (props) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
     props.form.validateFieldsAndScroll((err, values) => {
       const payload = {
         phone: values.number.trim(),
-        password: values.password
-      }
+        password: values.password,
+      };
       if (!err) {
-        props.dispatch(setLoading(true))
+        props.dispatch(setLoading(true));
         axios
           .post(loginURL, payload)
-          .then(res => {
-            message.success('Login Successful')
-            localStorage.setItem('token', res.data.token)
-            props.dispatch(clearErrors())
+          .then((res) => {
+            message.success('Login Successful');
+            localStorage.setItem('token', res.data.token);
+            props.dispatch(clearErrors());
 
             // check if user has store
             withAuth()
               .get(storeURL)
-              .then(res => {
+              .then((res) => {
                 if (res.data._id) {
-                  history.push('/dashboard')
+                  history.push('/dashboard');
                 } else {
-                  history.push('/createstore')
+                  history.push('/createstore');
                 }
               })
-              .catch(error => {
+              .catch((error) => {
                 if (error.response.data.message === 'No store found') {
-                  history.push('/createstore')
+                  history.push('/createstore');
                 } else {
-                  message.error(Object.values(error.response.data)[0])
+                  message.error(Object.values(error.response.data)[0]);
                 }
-              })
+              });
           })
-          .catch(error => {
-            props.dispatch(setLoading(false))
-            props.dispatch(setErrors(error.response.data))
-            message.error(Object.values(error.response.data)[0])
-          })
+          .catch((error) => {
+            props.dispatch(setLoading(false));
+            props.dispatch(setErrors(error.response.data));
+            message.error(Object.values(error.response.data)[0]);
+          });
       } else {
-        message.error('Enter Required Fields')
+        message.error('Enter Required Fields');
       }
-    })
-  }
-  const { getFieldDecorator } = props.form
+    });
+  };
+  const { getFieldDecorator } = props.form;
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 8 }
+      sm: { span: 8 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 16 }
-    }
-  }
+      sm: { span: 16 },
+    },
+  };
   const tailFormItemLayout = {
     wrapperCol: {
       xs: {
         span: 24,
-        offset: 0
+        offset: 0,
       },
       sm: {
         span: 16,
-        offset: 8
-      }
-    }
-  }
+        offset: 8,
+      },
+    },
+  };
 
   const loginForm = (
     <Spin spinning={props.isLoading}>
@@ -99,13 +99,13 @@ const Login = props => {
               {getFieldDecorator('number', {
                 rules: [
                   {
-                    message: 'Enter valid phone number'
+                    message: 'Enter valid phone number',
                   },
                   {
                     required: true,
-                    message: 'Enter valid phone number'
-                  }
-                ]
+                    message: 'Enter valid phone number',
+                  },
+                ],
               })(
                 <Input
                   className='form-input'
@@ -121,9 +121,9 @@ const Login = props => {
                 rules: [
                   {
                     required: true,
-                    message: 'Please input your password!'
-                  }
-                ]
+                    message: 'Please input your password!',
+                  },
+                ],
               })(
                 <Input.Password
                   className='form-input'
@@ -135,31 +135,37 @@ const Login = props => {
               )}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-              <Button type='primary' htmlType='submit'>
+              <Button type='primary' htmlType='submit' className='login-button'>
                 Login
               </Button>
             </Form.Item>
           </Form>
           <div id='or_login'>
             <p>
-              or <Link to='/register'>register</Link> instead
+              or{' '}
+              <Link className='register' to='/register'>
+                register
+              </Link>{' '}
+              instead
             </p>
             <p>
-              <Link to='/resetpassword'>Forgot password?</Link>
+              <Link className='resetpassword' to='/resetpassword'>
+                Forgot password?
+              </Link>
             </p>
           </div>
         </div>
       </div>
     </Spin>
-  )
+  );
 
-  return loginForm
-}
-const LoginForm = Form.create({ name: 'register' })(Login)
+  return loginForm;
+};
+const LoginForm = Form.create({ name: 'register' })(Login);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoading: state.user.isLoading,
-  errors: state.user.errors
-})
+  errors: state.user.errors,
+});
 
-export default connect(mapStateToProps, null)(LoginForm)
+export default connect(mapStateToProps, null)(LoginForm);
