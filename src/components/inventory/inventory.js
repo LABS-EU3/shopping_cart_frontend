@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { List, Input, Tabs, Button } from "antd";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { List, Input, Tabs, Button } from 'antd';
+import { NavLink } from 'react-router-dom';
 // import '../../less/index.less'
-import * as creators from "../../state/actionCreators";
-import Expanded from "./expand";
-import useCurrency from "../hooks/useCurrency";
+import * as creators from '../../state/actionCreators';
+import Expanded from './expand';
+import useCurrency from '../hooks/useCurrency';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
 
 const Inventory = () => {
-  const [searchString, setSearchString] = useState("");
+  const [searchString, setSearchString] = useState('');
   const change = (e) => {
     setSearchString(e.target.value);
   };
@@ -25,7 +25,7 @@ const Inventory = () => {
   const storeDetails = useSelector((state) => state.user);
 
   function searchObj(obj, string) {
-    const regExpFlags = "gi";
+    const regExpFlags = 'gi';
     const regExp = new RegExp(string, regExpFlags);
     return JSON.stringify(obj).match(regExp);
   }
@@ -37,32 +37,32 @@ const Inventory = () => {
   const sign = useCurrency(storeDetails.user.currency);
 
   return (
-    <div className="cover inventory">
-      <div className="top">
-        <div className="search">
+    <div className='cover inventory'>
+      <div className='top'>
+        <div className='search'>
           <Search
             onChange={change}
-            placeholder="search"
+            placeholder='search'
             style={{ width: 200 }}
           />
         </div>
-        <div className="content" style={{ paddingTop: "10px" }}>
+        <div className='content' style={{ paddingTop: '10px' }}>
           <div>
-            <h2 style={{ color: "darkgrey", paddingBottom: "15px" }}>
+            <h2 style={{ color: 'darkgrey', paddingBottom: '15px' }}>
               {storeDetails.user.storeName
                 ? storeDetails.user.storeName
-                : "Your Store"}
+                : 'Your Store'}
             </h2>
           </div>
           <div>
-            <Tabs className="tabs" defaultActiveKey="1">
-              <TabPane tab="Collapse" key="1">
+            <Tabs className='tabs' defaultActiveKey='1'>
+              <TabPane tab='Collapse' key='1'>
                 <Items
                   inventory={searchString ? searchFilter : inventory}
                   currency={sign}
                 />
               </TabPane>
-              <TabPane tab="Expand" key="2">
+              <TabPane tab='Expand' key='2'>
                 <Expanded
                   inventory={searchString ? searchFilter : inventory}
                   currency={sign}
@@ -79,21 +79,21 @@ const Inventory = () => {
 const Items = ({ inventory, currency }) => {
   return (
     <List
-      size="small"
-      itemLayout="horizontal"
+      size='small'
+      itemLayout='horizontal'
       dataSource={inventory}
       locale={{
         emptyText:
-          "Click the plus button below to start adding items to your store",
+          'Click the plus button below to start adding items to your store',
       }}
       renderItem={(item) => {
         console.log(item);
         return (
-          <List.Item className="block">
+          <List.Item className='block'>
             <List.Item.Meta
               title={
-                <div className="list title short">
-                  <h3 className="adjustRight">{item.name}</h3>
+                <div className='list title short'>
+                  <h3 className='adjustRight'>{item.name}</h3>
                   <div>
                     {currency}
                     {item.price}
@@ -101,12 +101,12 @@ const Items = ({ inventory, currency }) => {
                 </div>
               }
               description={
-                <div className="list short">
-                  <img className="displayImg" src={item.images[0]} />
-                  <div className="item-description">{item.description}</div>
+                <div className='list short'>
+                  <img className='displayImg' src={item.images[0]} />
+                  <div className='item-description'>{item.description}</div>
                   <NavLink to={`/updateitem/${item._id}`}>
                     <div>
-                      <Button size="default">Edit</Button>
+                      <Button size='default'>Edit</Button>
                     </div>
                   </NavLink>
                 </div>
