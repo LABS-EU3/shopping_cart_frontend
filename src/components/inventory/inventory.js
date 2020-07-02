@@ -94,7 +94,9 @@ const Items = ({ inventory, currency }) => {
               title={
                 <div className='list title short'>
                   <h3 className='adjustRight'>{item.name}</h3>
-                  <div>
+                  <div style={{
+                      color: 'rgb(255, 120, 90)'
+                  }}>
                     {currency}
                     {item.price}
                   </div>
