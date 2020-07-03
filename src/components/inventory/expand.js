@@ -52,7 +52,10 @@ const Expanded = ({ inventory, currency }) => {
                   <h3 style={{ color: 'black' }}>{item.name}</h3>
                   <p style={{ fontWeight: 'normal' }}>{item.description}</p>
                   <p style={{ fontWeight: 'normal', color: 'black' }}>
-                    Quantity in Stock: {item.stock}
+                    Quantity in Stock:{' '}
+                    <span style={{ fontWeight: 'bold', marginLeft: '10px' }}>
+                      {item.stock}
+                    </span>
                   </p>
                 </div>
                 <NavLink to={`/updateitem/${item._id}`}>
