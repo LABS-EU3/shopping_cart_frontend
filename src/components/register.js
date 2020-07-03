@@ -9,26 +9,26 @@ import { setLoading, setErrors, clearErrors } from '../state/actionCreators'
 import { connect } from 'react-redux'
 
 const signupURL = 'https://shopping-cart-eu3.herokuapp.com/api/auth/register'
-const RegistrationForm = props => {
+const RegistrationForm = (props) => {
   const [confirmDirty, setConfirmDirty] = useState(false)
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     props.form.validateFieldsAndScroll((err, values) => {
       const payload = {
         phone: values.number.trim(),
-        password: values.password
+        password: values.password,
       }
       if (!err) {
         props.dispatch(setLoading(true))
         axios
           .post(signupURL, payload)
-          .then(res => {
+          .then((res) => {
             message.success('Signed Up')
             localStorage.setItem('token', res.data.token)
             props.dispatch(clearErrors())
             history.push('/createstore')
           })
-          .catch(error => {
+          .catch((error) => {
             props.dispatch(setErrors(error.response.data))
             props.dispatch(setLoading(false))
             message.error(Object.values(error.response.data)[0])
@@ -38,7 +38,7 @@ const RegistrationForm = props => {
       }
     })
   }
-  const handleConfirmBlur = e => {
+  const handleConfirmBlur = (e) => {
     const { value } = e.target
     setConfirmDirty(!!value)
   }
@@ -64,24 +64,24 @@ const RegistrationForm = props => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 8 }
+      sm: { span: 8 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 16 }
-    }
+      sm: { span: 16 },
+    },
   }
   const tailFormItemLayout = {
     wrapperCol: {
       xs: {
         span: 24,
-        offset: 0
+        offset: 0,
       },
       sm: {
         span: 16,
-        offset: 8
-      }
-    }
+        offset: 8,
+      },
+    },
   }
 
   const registerForm = (
@@ -90,7 +90,7 @@ const RegistrationForm = props => {
         <div className='desktop-logo'>
           <h2 className='register-text'>Register new account</h2>
           <div className='desktop-logo-large'>
-            <img src={image} alt='PureRetail Logo' width='300' height='300' />
+            <img src={image} alt='Register logo' width='300' height='300' />
           </div>
         </div>
         <Logo />
@@ -188,9 +188,9 @@ const WrappedRegistrationForm = Form.create({ name: 'register' })(
   RegistrationForm
 )
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoading: state.user.isLoading,
-  errors: state.user.errors
+  errors: state.user.errors,
 })
 
 export default connect(mapStateToProps, null)(WrappedRegistrationForm)
