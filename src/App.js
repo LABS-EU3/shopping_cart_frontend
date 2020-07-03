@@ -23,9 +23,9 @@ import Support from './components/support'
 import SaveCartMain from './components/saveCart'
 import Account from './components/SellerAccount/SellerAccount'
 import Confirmation from './components/orderConfirmation'
-import NoMatch from './components/noMatch'
+// import NoMatch from './components/noMatch'
 
-function App () {
+function App() {
   window.addEventListener('load', () => {
     function handleNetworkChange(event) {
       if (navigator.onLine) {
@@ -34,9 +34,9 @@ function App () {
         document.getElementById('offline-notification').style.display = 'flex'
       }
     }
-    window.addEventListener('online', handleNetworkChange);
-    window.addEventListener('offline', handleNetworkChange);
-  });
+    window.addEventListener('online', handleNetworkChange)
+    window.addEventListener('offline', handleNetworkChange)
+  })
   return (
     <>
       <Switch>
@@ -46,7 +46,10 @@ function App () {
         <PublicRoute path='/resetpassword' component={ResetPasswordForm} />
         <PublicRoute path='/setnewpassword' component={SetNewPasswordForm} />
         <PublicRoute path='/store/:id' component={Store} />
-        <PublicRoute path='/cart/:id' component={localStorage.getItem('token') ? Confirmation : StripeMain} />
+        <PublicRoute
+          path='/cart/:id'
+          component={localStorage.getItem('token') ? Confirmation : StripeMain}
+        />
         <PublicRoute path='/review' component={Review} />
         <PublicRoute path='/savecart' component={SaveCartMain} />
         <PrivateRoute path='/createstore' component={CreateStoreForm} />
@@ -60,19 +63,22 @@ function App () {
         <PublicRoute exact path='/support' component={Support} />
         <PrivateRoute path='/account' component={Account} />
       </Switch>
-      <div id='offline-notification' style={{
-        position: 'fixed',
-        bottom: '0px',
-        width: '100vw',
-        height: '4vh',
-        textAlign: 'center',
-        backgroundColor: '#ff6663',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        color: 'white',
-        fontSize: 'medium',
-        display: 'none'
-      }}>
+      <div
+        id='offline-notification'
+        style={{
+          position: 'fixed',
+          bottom: '0px',
+          width: '100vw',
+          height: '4vh',
+          textAlign: 'center',
+          backgroundColor: '#ff6663',
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          color: 'white',
+          fontSize: 'medium',
+          display: 'none',
+        }}
+      >
         Offline Mode
       </div>
     </>

@@ -11,12 +11,12 @@ import MyStoreCheckout from './MyStoreCheckout'
 
 const { Panel } = Collapse
 
-const Stripe = props => {
+const Stripe = (props) => {
   const { cartId } = props
   const [clientId, setClientId] = useState('')
   const [stripeId, setStripeId] = useState('')
-  const cartContents = useSelector(state => state.savedCart)
-  const store = useSelector(state => state.user.user)
+  const cartContents = useSelector((state) => state.savedCart)
+  // const store = useSelector((state) => state.user.user)
   const savedDate = new Date(cartContents.checkoutDate || 0)
   const sign = useCurrency(cartContents.currency)
   const dispatch = useDispatch()
@@ -30,12 +30,11 @@ const Stripe = props => {
     dispatch(creators.getStore(cartContents.storeId))
   }, [dispatch, cartContents])
 
-  const url = `/store/${store &&
-    store.storeName &&
-    store.storeName
-      .toLowerCase()
-      .split(' ')
-      .join('-')}-${store && store._id}`
+  // const url = `/store/${
+  //   store &&
+  //   store.storeName &&
+  //   store.storeName.toLowerCase().split(' ').join('-')
+  // }-${store && store._id}`
 
   useEffect(() => {
     axios
@@ -43,13 +42,13 @@ const Stripe = props => {
         amount: cartContents.agreedPrice
           ? cartContents.agreedPrice.toFixed(2)
           : 0,
-        storeId: cartContents.storeId
+        storeId: cartContents.storeId,
       })
-      .then(res => {
+      .then((res) => {
         setClientId(res.data.paymentIntent.client_secret)
         setStripeId(res.data.stripeId)
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
       })
   }, [stripeId, cartContents])
@@ -62,7 +61,7 @@ const Stripe = props => {
           <div className='summary'>
             {cartContents.contents &&
               cartContents.contents.length &&
-              cartContents.contents.map(item => (
+              cartContents.contents.map((item) => (
                 <div className='units stop' key={item._id}>
                   {item.name} ({item.quantity} unit
                   {item.quantity > 1 ? 's' : ''}) -{' '}

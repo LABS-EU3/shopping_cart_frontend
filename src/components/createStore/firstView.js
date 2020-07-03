@@ -8,15 +8,15 @@ import store_image from '../../images/store.png'
 
 const { Option } = Select
 
-const CreateStore = props => {
+const CreateStore = (props) => {
   const dispatch = useDispatch()
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     props.form.validateFieldsAndScroll({ force: true }, (err, values) => {
       const payload = {
         name: values.name,
-        currency: values.currency
+        currency: values.currency,
       }
       if (!err) {
         dispatch(creators.updateForm(payload))
@@ -32,30 +32,35 @@ const CreateStore = props => {
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 8 }
+      sm: { span: 8 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 16 }
-    }
+      sm: { span: 16 },
+    },
   }
   const tailFormItemLayout = {
     wrapperCol: {
       xs: {
         span: 24,
-        offset: 0
+        offset: 0,
       },
       sm: {
         span: 16,
-        offset: 8
-      }
-    }
+        offset: 8,
+      },
+    },
   }
 
   return (
     <div id='create-store' className='cover'>
       <div className='desktop-logo-large'>
-        <img src={store_image} alt='Create Store Image' width='300' height='300' />
+        <img
+          src={store_image}
+          alt='Create Store logo'
+          width='300'
+          height='300'
+        />
       </div>
       <Logo />
       <Form {...formItemLayout} onSubmit={handleSubmit}>
@@ -71,13 +76,13 @@ const CreateStore = props => {
           {getFieldDecorator('name', {
             rules: [
               {
-                message: 'Enter your name'
+                message: 'Enter your name',
               },
               {
                 required: true,
-                message: 'Enter your name'
-              }
-            ]
+                message: 'Enter your name',
+              },
+            ],
           })(<Input placeholder='My name is...' />)}
         </Form.Item>
         <Form.Item hasFeedback>
@@ -85,9 +90,9 @@ const CreateStore = props => {
             rules: [
               {
                 required: true,
-                message: 'Select preferred currency'
-              }
-            ]
+                message: 'Select preferred currency',
+              },
+            ],
           })(
             <Select placeholder='... and I prefer to sell in'>
               <Option value='POU'>British Pounds (GBP / £)</Option>
