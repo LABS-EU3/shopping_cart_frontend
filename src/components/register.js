@@ -114,7 +114,7 @@ const RegistrationForm = (props) => {
                 ],
               })(
                 <Input
-                  className='input'
+                  className='input form-input'
                   placeholder='e.g. 2348000001231'
                   prefix={
                     <Icon type='phone' style={{ color: 'rgba(0,0,0,.70)' }} />
@@ -135,7 +135,7 @@ const RegistrationForm = (props) => {
                 ],
               })(
                 <Input.Password
-                  className='input'
+                  className='input form-input'
                   placeholder='Password'
                   prefix={
                     <Icon type='lock' style={{ color: 'rgba(0,0,0,.70)' }} />
@@ -156,7 +156,7 @@ const RegistrationForm = (props) => {
                 ],
               })(
                 <Input.Password
-                  className='input'
+                  className='input form-input'
                   onBlur={handleConfirmBlur}
                   placeholder='Confirm Password'
                   prefix={
@@ -166,20 +166,20 @@ const RegistrationForm = (props) => {
               )}
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
-              <Button type='primary' htmlType='submit'>
+              <Button type='primary' htmlType='submit' className='login-button'>
                 Register
               </Button>
             </Form.Item>
           </Form>
           <div id='or_login'>
             <p>
-              or <Link to='/'>login</Link> instead
+              or <Link className='register' to='/'>login</Link> instead
             </p>
           </div>
         </div>
       </div>
     </Spin>
-  )
+  );
 
   return registerForm
 }

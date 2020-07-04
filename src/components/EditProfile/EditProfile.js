@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import axiosWithAuth from '../Auth/axiosWithAuth'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react';
+import axiosWithAuth from '../Auth/axiosWithAuth';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import {
   Form,
   Input,
@@ -11,24 +11,24 @@ import {
   Modal,
   Upload,
   Icon,
-  Spin
-} from 'antd'
-import Logo from '../elements/logo'
+  Spin,
+} from 'antd';
+import Logo from '../elements/logo';
 import {
   logout,
   setLoading,
   setStore as updateStore,
   deleteAccount,
-  getCurrentUser
-} from '../../state/actionCreators'
-import history from '../../history'
-import axios from 'axios'
-import logo from '../../images/PureRetail_Logo.png'
+  getCurrentUser,
+} from '../../state/actionCreators';
+import history from '../../history';
+import axios from 'axios';
+import logo from '../../images/PureRetail_Logo.png';
 
-const storeUrl = 'https://shopping-cart-eu3.herokuapp.com/api/store/'
-const updatePhoneUrl = 'https://shopping-cart-eu3.herokuapp.com/api/auth/phone'
+const storeUrl = 'https://shopping-cart-eu3.herokuapp.com/api/store/';
+const updatePhoneUrl = 'https://shopping-cart-eu3.herokuapp.com/api/auth/phone';
 
-const { Option } = Select
+const { Option } = Select;
 
 const EditProfile = ({ dispatch, isLoading, form }) => {
   const [store, setStore] = useState({
@@ -36,68 +36,68 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
     currency: '',
     storeName: '',
     imageUrl: '',
-    address: ''
-  })
+    address: '',
+  });
 
   useEffect(() => {
-    dispatch(setLoading(true))
-    dispatch(getCurrentUser())
+    dispatch(setLoading(true));
+    dispatch(getCurrentUser());
     axiosWithAuth()
       .get(storeUrl)
-      .then(res => {
+      .then((res) => {
         const {
           ownerName,
           currency,
           storeName,
           address,
           imageUrl,
-          phone
-        } = res.data
-        setStore({ ownerName, currency, storeName, address, imageUrl, phone })
-        dispatch(setLoading(false))
+          phone,
+        } = res.data;
+        setStore({ ownerName, currency, storeName, address, imageUrl, phone });
+        dispatch(setLoading(false));
       })
-      .catch(err => {
-        dispatch(setLoading(false))
-        setErrors(err.response.data)
-      })
-  }, [dispatch])
+      .catch((err) => {
+        dispatch(setLoading(false));
+        setErrors(err.response.data);
+      });
+  }, [dispatch]);
 
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState({});
 
-  const handleChange = e => {
-    setStore({ ...store, [e.target.name]: e.target.value })
-  }
+  const handleChange = (e) => {
+    setStore({ ...store, [e.target.name]: e.target.value });
+  };
 
   const handleLogout = () => {
     // delete token from local storage and redirect to login
-    dispatch(logout())
-    history.push('/')
-  }
+    dispatch(logout());
+    history.push('/');
+  };
 
   const handleDeleteAccount = () => {
-    const { confirm } = Modal
+    const { confirm } = Modal;
     confirm({
       title: 'Are you sure you want to delete your account?',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
-      onOk () {
-        dispatch(setLoading(true))
-        dispatch(deleteAccount())
-        dispatch(logout())
-        history.push('/register')
+      onOk() {
+        dispatch(setLoading(true));
+        dispatch(deleteAccount());
+        dispatch(logout());
+        history.push('/register');
       },
-      onCancel () {}
-    })
-  }
+      onCancel() {},
+    });
+  };
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    dispatch(setLoading(true))
-    setErrors({})
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setLoading(true));
+    setErrors({});
     form.validateFieldsAndScroll({ force: true }, async (err, values) => {
       if (err) {
-        message.error('Enter Required Fields')
+        message.error('Enter Required Fields');
       }
 
       const payload = {
@@ -105,67 +105,67 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
         currency: values.currency,
         address: values.address,
         storeName: values.storeName,
-        imageUrl: store.imageUrl
-      }
+        imageUrl: store.imageUrl,
+      };
 
       try {
         await axiosWithAuth().put(updatePhoneUrl, {
-          phone: store.phone
-        })
+          phone: store.phone,
+        });
 
-        const response = await axiosWithAuth().put(storeUrl, payload)
+        const response = await axiosWithAuth().put(storeUrl, payload);
         if (response) {
-          dispatch(updateStore(response.data))
-          message.success('Your store has been updated')
-          history.push('/dashboard')
+          dispatch(updateStore(response.data));
+          message.success('Your store has been updated');
+          history.push('/dashboard');
         }
       } catch (errors) {
-        dispatch(setLoading(false))
-        message.error(Object.values(errors.response.data)[0])
-        return setErrors(Object.values(errors.response.data)[0])
+        dispatch(setLoading(false));
+        message.error(Object.values(errors.response.data)[0]);
+        return setErrors(Object.values(errors.response.data)[0]);
       }
-    })
-  }
+    });
+  };
 
   const dummyRequest = ({ file, onSuccess }) => {
-    const image = new FormData()
-    image.append('upload_preset', 'pure-retail')
-    image.append('file', file)
+    const image = new FormData();
+    image.append('upload_preset', 'pure-retail');
+    image.append('file', file);
     const config = {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    }
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+    };
     axios
       .post('https://api.cloudinary.com/v1_1/pureretail/upload', image, config)
-      .then(res => {
-        const secureUrl = res.data.secure_url
-        setStore({ ...store, imageUrl: secureUrl })
-      })
-  }
+      .then((res) => {
+        const secureUrl = res.data.secure_url;
+        setStore({ ...store, imageUrl: secureUrl });
+      });
+  };
 
-  const { getFieldDecorator } = form
+  const { getFieldDecorator } = form;
 
   const formItemLayout = {
     labelCol: {
       xs: { span: 24 },
-      sm: { span: 8 }
+      sm: { span: 8 },
     },
     wrapperCol: {
       xs: { span: 24 },
-      sm: { span: 16 }
-    }
-  }
+      sm: { span: 16 },
+    },
+  };
   const tailFormItemLayout = {
     wrapperCol: {
       xs: {
         span: 24,
-        offset: 0
+        offset: 0,
       },
       sm: {
         span: 16,
-        offset: 8
-      }
-    }
-  }
+        offset: 8,
+      },
+    },
+  };
 
   const createStore = (
     <div className='cover' style={{ height: 'auto' }}>
@@ -182,14 +182,11 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
         Logout
       </Button>
     </div>
-  )
+  );
 
   const editProfile = (
     <Spin spinning={isLoading}>
-      <div
-        className='cover'
-        style={{ height: 'auto', flexDirection: 'column' }}
-      >
+      <div className='cover editPage' style={{}}>
         <div id='add-logo-image'>
           <Upload
             name='avatar'
@@ -206,7 +203,7 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
                 width: '100%',
                 height: '100%',
                 position: 'relative',
-                opacity: '0.5'
+                opacity: '0.5',
               }}
             />
             <Icon
@@ -215,7 +212,7 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
                 position: 'relative',
                 bottom: '28px',
                 left: '28px',
-                fontSize: '23px'
+                fontSize: '23px',
               }}
             />
           </Upload>
@@ -230,13 +227,13 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
               initialValue: store && store.phone && store.phone.toString(),
               rules: [
                 {
-                  message: 'Enter valid Whatsapp number'
+                  message: 'Enter valid Whatsapp number',
                 },
                 {
                   required: true,
-                  message: 'Enter valid Whatsapp number'
-                }
-              ]
+                  message: 'Enter valid Whatsapp number',
+                },
+              ],
             })(
               <Input
                 onChange={handleChange}
@@ -250,13 +247,13 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
               initialValue: store.ownerName,
               rules: [
                 {
-                  message: 'Enter your name'
+                  message: 'Enter your name',
                 },
                 {
                   required: true,
-                  message: 'Enter your name'
-                }
-              ]
+                  message: 'Enter your name',
+                },
+              ],
             })(
               <Input
                 onChange={handleChange}
@@ -272,9 +269,9 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
               rules: [
                 {
                   required: true,
-                  message: 'Select preferred currency'
-                }
-              ]
+                  message: 'Select preferred currency',
+                },
+              ],
             })(
               <Select name='currency' placeholder='Select your currency'>
                 <Option value='POU'>British Pounds (GBP / £)</Option>
@@ -290,13 +287,13 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
               initialValue: store.storeName,
               rules: [
                 {
-                  message: 'Store name is required'
+                  message: 'Store name is required',
                 },
                 {
                   required: true,
-                  message: 'Store name is required'
-                }
-              ]
+                  message: 'Store name is required',
+                },
+              ],
             })(
               <Input
                 onChange={handleChange}
@@ -310,13 +307,13 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
               initialValue: store.address,
               rules: [
                 {
-                  message: 'Store address is required'
+                  message: 'Store address is required',
                 },
                 {
                   required: true,
-                  message: 'Store address is required'
-                }
-              ]
+                  message: 'Store address is required',
+                },
+              ],
             })(
               <Input
                 onChange={handleChange}
@@ -326,25 +323,34 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
             )}
           </Form.Item>
 
-          <Form.Item {...tailFormItemLayout}>
-            <Button type='primary' htmlType='submit'>
-              Update
-            </Button>
-          </Form.Item>
+          <div
+            style={{
+              display: 'flex',
+              width: '80%',
+              justifyContent: 'center',
+            }}
+          >
+            <Form.Item {...tailFormItemLayout}>
+              <Button type='primary' htmlType='submit'>
+                Update
+              </Button>
+            </Form.Item>
 
-          <Form.Item {...tailFormItemLayout}>
-            <Button onClick={handleLogout} type='primary' htmlType='button'>
-              Logout
-            </Button>
-          </Form.Item>
-
+            <Form.Item {...tailFormItemLayout}>
+              <Button onClick={handleLogout} type='primary' htmlType='button'>
+                Logout
+              </Button>
+            </Form.Item>
+          </div>
           <Form.Item {...tailFormItemLayout}>
             <Button
               onClick={handleDeleteAccount}
               id='delete-btn'
               type='link'
               htmlType='button'
-              style={{ marginBottom: '25px' }}
+              style={{
+             
+              }}
             >
               Delete account
             </Button>
@@ -352,18 +358,18 @@ const EditProfile = ({ dispatch, isLoading, form }) => {
         </Form>
       </div>
     </Spin>
-  )
+  );
 
   return errors.message === 'There is no store with that id'
     ? createStore
-    : editProfile
-}
+    : editProfile;
+};
 
-const EditForm = Form.create()(EditProfile)
+const EditForm = Form.create()(EditProfile);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLoading: state.user.isLoading,
-  imageUrl: state.user.user.imageUrl
-})
+  imageUrl: state.user.user.imageUrl,
+});
 
-export default connect(mapStateToProps, null)(EditForm)
+export default connect(mapStateToProps, null)(EditForm);

@@ -1,40 +1,40 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { List, Input, Tabs, Button } from 'antd'
-import { NavLink } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { List, Input, Tabs, Button } from 'antd';
+import { NavLink } from 'react-router-dom';
 // import '../../less/index.less'
-import * as creators from '../../state/actionCreators'
-import Expanded from './expand'
-import useCurrency from '../hooks/useCurrency'
+import * as creators from '../../state/actionCreators';
+import Expanded from './expand';
+import useCurrency from '../hooks/useCurrency';
 
-const { TabPane } = Tabs
-const { Search } = Input
+const { TabPane } = Tabs;
+const { Search } = Input;
 
 const Inventory = () => {
-  const [searchString, setSearchString] = useState('')
-  const change = e => {
-    setSearchString(e.target.value)
-  }
+  const [searchString, setSearchString] = useState('');
+  const change = (e) => {
+    setSearchString(e.target.value);
+  };
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(creators.getCurrentUser())
-  }, [dispatch])
+    dispatch(creators.getCurrentUser());
+  }, [dispatch]);
 
-  const inventory = useSelector(state => state.store)
-  const storeDetails = useSelector(state => state.user)
+  const inventory = useSelector((state) => state.store);
+  const storeDetails = useSelector((state) => state.user);
 
-  function searchObj (obj, string) {
-    const regExpFlags = 'gi'
-    const regExp = new RegExp(string, regExpFlags)
-    return JSON.stringify(obj).match(regExp)
+  function searchObj(obj, string) {
+    const regExpFlags = 'gi';
+    const regExp = new RegExp(string, regExpFlags);
+    return JSON.stringify(obj).match(regExp);
   }
 
   const searchFilter = inventory.filter(function (obj) {
-    return searchObj(obj, searchString)
-  })
+    return searchObj(obj, searchString);
+  });
 
-  const sign = useCurrency(storeDetails.user.currency)
+  const sign = useCurrency(storeDetails.user.currency);
 
   return (
     <div className='cover inventory'>
@@ -48,23 +48,33 @@ const Inventory = () => {
         </div>
         <div className='content' style={{ paddingTop: '10px' }}>
           <div>
-            <h2 style={{ color: 'darkgrey', paddingBottom: '15px' }}>{storeDetails.user.storeName ? storeDetails.user.storeName : 'Your Store'}</h2>
+            <h2 style={{ color: 'darkgrey', paddingBottom: '15px' }}>
+              {storeDetails.user.storeName
+                ? storeDetails.user.storeName
+                : 'Your Store'}
+            </h2>
           </div>
           <div>
             <Tabs className='tabs' defaultActiveKey='1'>
               <TabPane tab='Collapse' key='1'>
-                <Items inventory={searchString ? searchFilter : inventory} currency={sign} />
+                <Items
+                  inventory={searchString ? searchFilter : inventory}
+                  currency={sign}
+                />
               </TabPane>
               <TabPane tab='Expand' key='2'>
-                <Expanded inventory={searchString ? searchFilter : inventory} currency={sign} />
+                <Expanded
+                  inventory={searchString ? searchFilter : inventory}
+                  currency={sign}
+                />
               </TabPane>
             </Tabs>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Items = ({ inventory, currency }) => {
   return (
@@ -72,19 +82,29 @@ const Items = ({ inventory, currency }) => {
       size='small'
       itemLayout='horizontal'
       dataSource={inventory}
-      locale={{ emptyText: 'Click the plus button below to start adding items to your store' }}
-      renderItem={item => {
+      locale={{
+        emptyText:
+          'Click the plus button below to start adding items to your store',
+      }}
+      renderItem={(item) => {
+        console.log(item);
         return (
           <List.Item className='block'>
             <List.Item.Meta
               title={
                 <div className='list title short'>
-                  <h3>{item.name}</h3>
-                  <div>{currency}{item.price}</div>
+                  <h3 className='adjustRight'>{item.name}</h3>
+                  <div style={{
+                      color: 'rgb(255, 120, 90)'
+                  }}>
+                    {currency}
+                    {item.price}
+                  </div>
                 </div>
               }
               description={
                 <div className='list short'>
+                  <img className='displayImg' src={item.images[0]} alt='product'/>
                   <div className='item-description'>{item.description}</div>
                   <NavLink to={`/updateitem/${item._id}`}>
                     <div>
@@ -95,10 +115,10 @@ const Items = ({ inventory, currency }) => {
               }
             />
           </List.Item>
-        )
+        );
       }}
     />
-  )
-}
+  );
+};
 
-export default Inventory
+export default Inventory;
