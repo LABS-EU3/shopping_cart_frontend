@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom'
 import * as creators from '../../state/actionCreators'
 import useCurrency from '../hooks/useCurrency'
 import stockImage from '../../images/PureRetail_Logo.png'
-
+// begin fix for infinite spinner
 const { TabPane } = Tabs
 const { Meta } = Card
 
-const StoreMain = props => {
+const StoreMain = (props) => {
   const { sellerId, cartContents, store } = props
 
   const dispatch = useDispatch()
@@ -20,24 +20,24 @@ const StoreMain = props => {
     dispatch(creators.setStoreUrl(window.location.href))
     creators.setLoading(false)
   }, [sellerId, dispatch])
-  const inventory = useSelector(state => state.store)
+  const inventory = useSelector((state) => state.store)
   const storeDetails = store.user
-  const searchString = useSelector(state => state.search)
+  const searchString = useSelector((state) => state.search)
   const currency = useCurrency(storeDetails.currency)
-  const isLoading = useSelector(state => state.user.isLoading)
+  const isLoading = useSelector((state) => state.user.isLoading)
 
-  function searchObj (obj, string) {
+  function searchObj(obj, string) {
     const regExpFlags = 'gi'
     const regExp = new RegExp(string, regExpFlags)
     return JSON.stringify(obj).match(regExp)
   }
-  const removeItem = item => {
+  const removeItem = (item) => {
     dispatch(creators.subtractFromCart(item))
   }
   const searchFilter = inventory.filter(function (obj) {
     return searchObj(obj, searchString)
   })
-  const dispatchItem = item => {
+  const dispatchItem = (item) => {
     dispatch(creators.addToCart(item))
   }
   return (
@@ -90,13 +90,13 @@ const Items = ({
   currency,
   dispatchItem,
   cartContents,
-  removeItem
+  removeItem,
 }) => {
-  const btnChange = item => {
+  const btnChange = (item) => {
     const itemObj = cartContents.find(({ productId }) => productId === item._id)
     return itemObj
   }
-  return inventory.map(item => (
+  return inventory.map((item) => (
     <Card
       key={item.name}
       hoverable
@@ -109,7 +109,7 @@ const Items = ({
         margin: '0.5rem',
         boxSizing: 'border-box',
         boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
-        borderRadius: '1rem'
+        borderRadius: '1rem',
       }}
       cover={
         item.images[0] ? (
@@ -176,13 +176,13 @@ const LargeItems = ({
   currency,
   dispatchItem,
   cartContents,
-  removeItem
+  removeItem,
 }) => {
-  const btnChange = item => {
+  const btnChange = (item) => {
     const itemObj = cartContents.find(({ productId }) => productId === item._id)
     return itemObj
   }
-  return inventory.map(item => (
+  return inventory.map((item) => (
     <Card
       key={item.name}
       bordered='false'
@@ -197,7 +197,7 @@ const LargeItems = ({
         margin: '0.5rem',
         borderRadius: '2rem',
         boxSizing: 'border-box',
-        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)'
+        boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)',
       }}
       cover={
         item.images[0] ? (
